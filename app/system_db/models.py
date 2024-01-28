@@ -9,7 +9,7 @@ class Users(Base,UserMixin):
     email:Mapped[str] = mapped_column(unique=True,nullable=False)
     hash_password:Mapped[str] = mapped_column(nullable=False)
 
-    def get(self):
+    def get_id(self):
         return self.user_id
     
     query = db_session.query_property()

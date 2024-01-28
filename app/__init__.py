@@ -15,5 +15,7 @@ def create_app(config=Config):
     login.init_app(app)
     login.login_view = 'auth_bp.login'
     from app.auth import auth_bp
+    from app.storage import storage_bp
     app.register_blueprint(auth_bp,url_prefix='/auth/')
+    app.register_blueprint(storage_bp,url_prefix='/storage/')
     return app
