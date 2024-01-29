@@ -7,7 +7,7 @@ engine = create_engine(url='sqlite:///app/system_db/db.db')
 
 Base = declarative_base()
 
-db_session = scoped_session(sessionmaker(bind=engine,autoflush=False,autocommit=False))
+db_session = scoped_session(sessionmaker(bind=engine,autoflush=False,autocommit=False,expire_on_commit=False))
 
 
 

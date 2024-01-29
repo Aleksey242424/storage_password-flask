@@ -7,6 +7,15 @@
 </head>
 <body>
     <a href="{{url_for('storage_bp.logout')}}">username</a>
-
+    <form action="" method="post" novalidate>
+        {{form.hidden_tag()}}
+        {{form.csrf_token()}}
+        {{form.title()}}
+        {{form.password()}}
+        {{form.add()}}
+    </form>
+    {%for essence in data%}
+    <a href='{{url_for("storage_bp.storage_password",id = essence.password_id,username=current_user.username)}}'>{{essence.title}}</a><br>
+    {%endfor%}
 </body>
 </html>
