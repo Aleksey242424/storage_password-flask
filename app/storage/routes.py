@@ -1,8 +1,14 @@
 from app.storage import storage_bp
 from flask_login import login_required,logout_user
 from flask import render_template,redirect,url_for
+from flask_login import current_user
 
-@storage_bp.route('/<username>')
+
+@storage_bp.route('/')
+@login_required
+def redirect_storage():
+    return redirect(url_for('storage_bp.storage',username=current_user.username))
+@storage_bp.route('/storage/<username>')
 @login_required
 def storage(username):
     return render_template('storage/storage.html')

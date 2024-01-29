@@ -27,3 +27,16 @@ class Users:
             except AttributeError:
                 return
             
+    @staticmethod
+    def check_email(email):
+        from app.system_db.models import Users
+        with db_session() as session:
+            user_id = session.query(Users.user_id).filter_by(email=email).scalar()
+            return user_id
+        
+    @staticmethod
+    def update_password(user_id,password):
+        from app.system_db.models import Users
+        with db_session() as session:
+            session.query(Users).filter_by(user_id=user_id).update({'hash_password':generate_password_hash(password)})
+            session.commit()

@@ -14,8 +14,9 @@ def create_app(config=Config):
     app.config.from_object(config)
     login.init_app(app)
     login.login_view = 'auth_bp.login'
+    mail.init_app(app)
     from app.auth import auth_bp
     from app.storage import storage_bp
     app.register_blueprint(auth_bp,url_prefix='/auth/')
-    app.register_blueprint(storage_bp,url_prefix='/storage/')
+    app.register_blueprint(storage_bp,url_prefix='/')
     return app
