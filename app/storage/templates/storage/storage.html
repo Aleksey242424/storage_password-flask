@@ -15,7 +15,8 @@
         {{form.add()}}
     </form>
     {%for essence in data%}
-    <a href='{{url_for("storage_bp.storage_password",id = essence.password_id,username=current_user.username)}}'>{{essence.title}}</a><br>
+    {%set password_id = g.generate_token(essence.password_id,"password_id")%}
+    <a href='{{url_for("storage_bp.storage_password",password_id = password_id,username=current_user.username)}}'>{{essence.title}}</a><br>
     {%endfor%}
 </body>
 </html>
