@@ -23,7 +23,7 @@ class Password:
     def get(user_id,page):
         from app.system_db.models import Password
         with db_session() as session:
-            data = session.query(Password).filter_by(user_id=user_id).all()
+            data = session.query(Password).filter_by(user_id=user_id).offset(5*page-5).limit(5)
             return data
         
     @staticmethod
@@ -32,5 +32,20 @@ class Password:
         with db_session() as session:
             password_data = session.query(Password).filter_by(password_id=password_id).scalar()
             return password_data
+        
+    @staticmethod
+    def update_password_data(password_id,password_,title):
+        from app.system_db.models import Password
+        with db_session() as session:
+            password = session.query(Password).filter_by(password_id=password_id).scalar()
+            password.password = password_
+            password.title = title
+            session.commit()
 
+    @staticmethod
+    def get_count_group(user_id):
+        from app.system_db.models import Password
+        with db_session() as session:
+            count_password = session.query(Password).filter_by(user_id=user_id).count()
+            return int(-1*(count_password/5)//1*-1)
  
