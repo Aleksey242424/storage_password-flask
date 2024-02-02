@@ -17,6 +17,8 @@ class Users(Base,UserMixin):
     
     query = db_session.query_property()
 
+    __table_args__ = ({'extend_existing':True})
+
 class Password(Base):
     __tablename__ = 'password'
     password_id:Mapped[int]=mapped_column(primary_key=True)

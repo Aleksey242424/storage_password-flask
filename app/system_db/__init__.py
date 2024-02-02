@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base,scoped_session,sessionmaker
 from app import login
+from config import Config
 
-
-engine = create_engine(url='sqlite:///app/system_db/db.db')
+engine = create_engine(url=f'postgresql+{Config.DB_API}://{Config.DB_USERNAME}:{Config.DB_PASSWORD}@{Config.DB_HOST}:{Config.DB_PORT}/{Config.DB_NAME}')
 
 Base = declarative_base()
 

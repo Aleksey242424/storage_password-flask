@@ -23,7 +23,7 @@ class Password:
     def get(user_id,page):
         from app.system_db.models import Password
         with db_session() as session:
-            data = session.query(Password).filter_by(user_id=user_id).offset(5*page-5).limit(5)
+            data = session.query(Password).filter_by(user_id=user_id).order_by(Password.password_id.desc()).offset(5*page-5).limit(5)
             return data
         
     @staticmethod

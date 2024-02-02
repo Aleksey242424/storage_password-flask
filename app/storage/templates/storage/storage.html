@@ -18,12 +18,14 @@
     {%set password_id = g.generate_token(essence.password_id,"password_id")%}
     <a href='{{url_for("storage_bp.storage_password",password_id = password_id,username=current_user.username)}}'>{{essence.title}}</a><br>
     {%endfor%}
-    {%for i in range(0,pages)%}
-    {%if i+1 == page%}
-    <a href="{{url_for('storage_bp.storage',page=(i+1),username=current_user.username)}}">...</a>
-    {%else%}
-    <a href="{{url_for('storage_bp.storage',page=(i+1),username=current_user.username)}}">{{i+1}}</a>
+    {%if pages>1%}
+        {%for i in range(0,pages)%}
+        {%if i+1 == page%}
+        <a href="{{url_for('storage_bp.storage',page=(i+1),username=current_user.username)}}">...</a>
+        {%else%}
+        <a href="{{url_for('storage_bp.storage',page=(i+1),username=current_user.username)}}">{{i+1}}</a>
+        {%endif%}
+        {%endfor%}
     {%endif%}
-    {%endfor%}
 </body>
 </html>

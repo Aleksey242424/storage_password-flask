@@ -38,7 +38,7 @@ def storage_password(username):
         title = form.title.data
         password_ = form.password.data
         Password.update_password_data(password_id,password_,title)
-        return redirect(url_for('storage_bp.storage_password',username=username,password_id=token))
+        return redirect(url_for('storage_bp.storage',username=username))
     form.title.data = password.title
     form.password.data = password.password
     return render_template('storage/password.html',password=password,form=form)
