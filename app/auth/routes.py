@@ -29,7 +29,7 @@ def login():
 def register():
     if current_user.is_anonymous:
         form = RegisterForm()
-        if form.validate_on_submit:
+        if request.method == 'POST':
             username = form.username.data
             password = form.password.data
             email = form.email.data
