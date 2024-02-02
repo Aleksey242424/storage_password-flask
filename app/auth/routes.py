@@ -9,6 +9,7 @@ from app.auth.messages import send_jwt
 @auth_bp.route('/',methods=['GET','POST'])
 def login():
     if current_user.is_anonymous:
+        next = request.args.get('next')
         form = LoginForm()
         if request.method == 'POST':
             username = form.username.data
@@ -17,6 +18,8 @@ def login():
             user = Users.get_instance(username,password)
             if user:
                 login_user(user,remember=remember_me)
+                if next:
+                    return redirect(next)
                 return redirect(url_for('storage_bp.storage',username=current_user.username))
             flash('Данные не коректны')
         return render_template('auth/login.html',form=form)
@@ -26,7 +29,7 @@ def login():
 def register():
     if current_user.is_anonymous:
         form = RegisterForm()
-        if request.method == 'POST':
+        if form.validate_on_submit:
             username = form.username.data
             password = form.password.data
             email = form.email.data
@@ -35,7 +38,7 @@ def register():
                 remember_me = form.remember_me.data
                 login_user(user,remember=remember_me)
                 return redirect(url_for('storage_bp.storage',username=current_user.username))
-            flash('Такой пользователь уже существует')
+            flash('Такой пользователь \n уже существует \n\n либо данные не\n коректны')
         return render_template('auth/register.html',form=form)
     return redirect(url_for('storage_bp.storage',username=current_user.username))
 
@@ -50,6 +53,8 @@ def reset_password():
                 token = generate_token(user_id)
                 send_jwt(email,token)
                 flash('Проверьте вашу почту')
+            else:
+                flash('Данные не коректны')
         return render_template('auth/reset_password.html',form=form)
     return redirect(url_for('storage_bp.storage'))
 

@@ -12,7 +12,7 @@ class RegisterForm(FlaskForm):
     username = StringField(label='username',render_kw={'placeholder':'username'},validators=[DataRequired(),Length(0,255)])
     password = PasswordField(label='password',render_kw={'placeholder':'password'},validators=[DataRequired(),Length(0,255)])
     repeat_password = PasswordField(label='password',render_kw={'placeholder':'password'},validators=[EqualTo('password')])
-    email = EmailField(label='email',render_kw={'placeholder':'email'},validators=[DataRequired(),Length(0,255)])
+    email = EmailField(label='email',render_kw={'placeholder':'email'},validators=[DataRequired(),Length(0,255),Email()])
     remember_me = BooleanField(label='remember_me')
     register = SubmitField(label='register')
 

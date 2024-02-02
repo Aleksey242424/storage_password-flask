@@ -3,29 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/storage.css')}}">
     <title>Storage</title>
 </head>
 <body>
-    <a href="{{url_for('storage_bp.logout')}}">username</a>
     <form action="" method="post" novalidate>
         {{form.hidden_tag()}}
         {{form.csrf_token()}}
-        {{form.title()}}
-        {{form.password()}}
-        {{form.add()}}
+        {{form.title()}}<br>
+        {{form.password()}}<br>
+        {{form.add()}}<br>
     </form>
-    {%for essence in data%}
-    {%set password_id = g.generate_token(essence.password_id,"password_id")%}
-    <a href='{{url_for("storage_bp.storage_password",password_id = password_id,username=current_user.username)}}'>{{essence.title}}</a><br>
-    {%endfor%}
-    {%if pages>1%}
-        {%for i in range(0,pages)%}
-        {%if i+1 == page%}
-        <a href="{{url_for('storage_bp.storage',page=(i+1),username=current_user.username)}}">...</a>
-        {%else%}
-        <a href="{{url_for('storage_bp.storage',page=(i+1),username=current_user.username)}}">{{i+1}}</a>
-        {%endif%}
+    <div class="block-content">
+        {%for essence in data%}
+        {%set password_id = g.generate_token(essence.password_id,"password_id")%}
+        <a href='{{url_for("storage_bp.storage_password",password_id = password_id,username=current_user.username)}}'>
+            <div class="essence-block">
+                <p class="date_create">{{moment(essence.date_create).format('LLL')}}</p>
+                <p class="title">{{essence.title}}</p>
+            </div>
+        </a>
         {%endfor%}
-    {%endif%}
+        {{moment.include_moment()}}
+        {{moment.lang('ru')}}
+    </div>
+    <div class="pages">
+        {%if pages>1%}
+            {%for i in range(0,pages)%}
+            <a href="{{url_for('storage_bp.storage',page=(i+1),username=current_user.username)}}">
+                <div>
+                    {%if i+1 == page%}
+                    ...
+                    {%else%}
+                    {{i+1}}
+                    {%endif%}
+                </div>
+            </a>
+            {%endfor%}
+        {%endif%}
+    </div>
 </body>
 </html>

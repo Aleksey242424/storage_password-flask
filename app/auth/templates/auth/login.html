@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{url_for('static',filename='images/icon.png')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}">
     <title>Login</title>
 </head>
 <body>
@@ -11,11 +13,16 @@
         {{form.csrf_token()}}
         {{form.username()}}
         {{form.password()}}
-        {{form.remember_me()}}
+        <div>Запомнить меня {{form.remember_me()}}</div>
         {{form.sign_in()}}
         {%with message = get_flashed_messages()%}
-        {{message}}
+        {%if message%}
+        <p class="flash">{{message[0]}}</p>
+        {%endif%}
         {%endwith%}
+        <a href="{{url_for('auth_bp.reset_password')}}">Забыли парполь?</a>
+        <a href="{{url_for('auth_bp.register')}}">register</a>
     </form>
+    
 </body>
 </html>

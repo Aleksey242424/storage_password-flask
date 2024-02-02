@@ -14,6 +14,7 @@ def create_app(config=Config):
     app.config.from_object(config)
     login.init_app(app)
     login.login_view = 'auth_bp.login'
+    login.login_message = 'Для начала авторизуйтесь'
     mail.init_app(app)
     moment.init_app(app)
     from app.auth import auth_bp
